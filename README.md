@@ -4,7 +4,7 @@
 ## Naira Tahira (241511022)
 ## 2A - D3 Informatic Engineering
 
-MBG (**Manajemen Bahan Gudang**) is a web-based application built using **CodeIgniter 4** to manage raw material inventories and kitchen requests in a catering or manufacturing environment.  
+MBG (**Free Food from Gudang Management**) is a web-based application built using **CodeIgniter 4** to manage raw material inventories and kitchen requests in a catering or manufacturing environment.  
 It helps coordinate between **Warehouse (Gudang)** and **Kitchen (Dapur)** users for efficient material flow, request approvals, and stock monitoring.
 
 ---
