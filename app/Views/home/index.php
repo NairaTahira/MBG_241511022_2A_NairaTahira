@@ -22,7 +22,7 @@
             <i class="bi bi-journal-text display-4 text-primary"></i>
             <h5 class="mt-3">Kelola Bahan Baku</h5>
             <p class="text-muted">Modify, Create, or Stock Up the Raw Materials </p>
-            <a href="/courses" class="btn btn-outline-primary btn-sm">Go</a>
+            <a href="/bahanbaku" class="btn btn-outline-primary btn-sm">Go</a>
           </div>
         </div>
       </div>

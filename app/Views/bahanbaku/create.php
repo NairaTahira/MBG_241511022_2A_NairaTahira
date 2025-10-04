@@ -10,10 +10,10 @@
   <!-- Add Course Form -->
   <div class="card shadow-sm border-0">
     <div class="card-body">
-      <form id="courseForm" method="post" action="/courses/store" novalidate>
+      <form id="bahanbakuForm" method="post" action="/bahanbaku/store" novalidate>
         <div class="mb-3">
-          <label class="form-label">Bahan Baku</label>
-          <input type="text" class="form-control" name="nama" id="nama" required>
+          <label class="form-label">Raw Material</label>
+          <input type="text" class="form-control" name="nama" id="nama" autocomplete="off" required>
           <div class="invalid-feedback">Bahan Baku is required.</div>
         </div>
 
@@ -37,27 +37,24 @@
 
         <div class="mb-3">
           <label class="form-label">Tanggal Masuk	</label>
-          <input type="text" class="form-control" name="tanggal_masuk" id="tanggal_masuk" required>
-          <div class="invalid-feedback">Entry Date is required.</div>
+          <input type="date" class="form-control" name="tanggal_masuk" required>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Tanggal Kadaluarsa	</label>
-          <input type="text" class="form-control" name="tanggal_kadaluarsa" id="tanggal_kadaluarsa" required>
-          <div class="invalid-feedback">Expiry Date is required.</div>
+          <input type="date" class="form-control" name="tanggal_kadaluarsa" required>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Status</label>
-          <input type="text" class="form-control" name="status" id="status" required>
-          <div class="invalid-feedback">Status is required.</div>
+          <select class="form-select" name="status" required>
+            <option value="tersedia">Tersedia</option>
+            <option value="segera_kadaluarsa">Segera Kadaluarsa</option>
+            <option value="kadaluarsa">Kadaluarsa</option>
+            <option value="habis">Habis</option>
+          </select>
         </div>
 
-        <div class="mb-3">
-          <label class="form-label">Created</label>
-          <input type="text" class="form-control" name="created_at" id="created_at" required>
-          <div class="invalid-feedback">Created Date is required.</div>
-        </div>
 
         <button class="btn btn-success">Save</button>
       </form>

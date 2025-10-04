@@ -1,54 +1,46 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\CourseModel;  
-use App\Models\TakesModel;
+use App\Models\BahanBakuModel;
 
-class Courses extends BaseController
+class BahanBaku extends BaseController
 {
     protected $model;
 
     public function __construct()
     {
-        $this->model = new CourseModel(); 
+        $this->model = new BahanBakuModel(); 
     }
 
+
+    // List all the raw materials
     public function index()
     {
-        $courseModel = new CourseModel();
-        $takeModel   = new TakesModel();
 
-        $courses = $courseModel->findAll();
-        $enrolledIds = [];
-
-        if (session()->get('role') === 'student') {
-            $studentId = session()->get('user_id');
-            $enrolled  = $takeModel->where('student_id', $studentId)->findAll();
-            $enrolledIds = array_column($enrolled, 'course_id');
-        }
+        $bahanBaku = $this->model->findAll();
 
         $data = [
-            'title'       => 'Courses',   
-            'content'     => view('courses/index', [
-                'courses'     => $courses,
-                'enrolledIds' => $enrolledIds
-            ])
+            'title'   => 'Daftar Bahan Baku',
+            'content' => view('bahanbaku/index', ['bahan_baku' => $bahanBaku])
         ];
-
         return view('view_template_01', $data);
     }
+
+    // To create a new raw material
 
     public function create()
     {
-        if (session()->get('role') !== 'admin') return redirect()->to('/courses');
+        if (session()->get('role') !== 'gudang') return redirect()->to('/bahanbaku');
 
         $data = [
             'title'   => 'Add Bahan Baku',
-            'content' => view('courses/create')
+            'content' => view('bahanbaku/create')
         ];
         return view('view_template_01', $data);
     }
 
+
+    // Storing new raw material
     public function store()
     {
         $this->model->save([
@@ -59,21 +51,25 @@ class Courses extends BaseController
             'tanggal_masuk' => $this->request->getPost('tanggal_masuk'),
             'tanggal_kadaluarsa' => $this->request->getPost('tanggal_kadaluarsa'),
             'status' => $this->request->getPost('status'),
-            'created_at' => $this->request->getPost('created_at')
+            'created_at'         => date('Y-m-d H:i:s')
         ]);
-        return redirect()->to('/courses');
+        return redirect()->to('/bahanbaku');
     }
 
+
+    // Edit raw material
     public function edit($id)
     {
-        $course = $this->model->find($id);
+        $bahan = $this->model->find($id);
         $data = [
             'title'   => 'Edit Bahan Baku',
-            'content' => view('courses/edit', ['bahan_baku' => $course])
+            'content' => view('bahanbaku/edit', ['bahan' => $bahan])
         ];
         return view('view_template_01', $data);
     }
 
+
+    // Update raw material
     public function update($id)
     {
         $this->model->update($id, [
@@ -84,14 +80,13 @@ class Courses extends BaseController
             'tanggal_masuk' => $this->request->getPost('tanggal_masuk'),
             'tanggal_kadaluarsa' => $this->request->getPost('tanggal_kadaluarsa'),
             'status' => $this->request->getPost('status'),
-            'created_at' => $this->request->getPost('created_at')
         ]);
-        return redirect()->to('/courses');
+        return redirect()->to('/bahanbaku');
     }
 
     public function delete($id)
     {
         $this->model->delete($id);
-        return redirect()->to('/courses');
+        return redirect()->to('/bahanbaku');
     }
 }

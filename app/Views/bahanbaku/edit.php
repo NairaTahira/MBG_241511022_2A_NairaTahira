@@ -10,63 +10,57 @@
   <!-- Edit Course Form -->
   <div class="card shadow-sm border-0">
     <div class="card-body">
-      <form id="editCourseForm" method="post" action="/courses/update/<?= $course['id'] ?>" novalidate>
+      <form id="editCourseForm" method="post" action="/bahanbaku/update/<?= $bahan['id'] ?>" novalidate>
         <div class="mb-3">
           
           <label class="form-label">Bahan Baku</label>
           <input type="text" class="form-control" name="nama" 
-                value="<?= esc($course['nama']) ?>" required>
+                value="<?= esc($bahan['nama']) ?>" required>
           <div class="invalid-feedback">Bahan Baku is required.</div>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Category</label>
           <input type="text" class="form-control" name="kategori" 
-                value="<?= esc($course['kategori']) ?>" required>
+                value="<?= esc($bahan['kategori']) ?>" required>
           <div class="invalid-feedback">Category is required.</div>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Jumlah</label>
           <input type="number" class="form-control" name="jumlah" 
-                value="<?= esc($course['jumlah']) ?>" required>
+                value="<?= esc($bahan['jumlah']) ?>" required>
           <div class="invalid-feedback">Total is required.</div>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Satuan</label>
           <input type="text" class="form-control" name="satuan" 
-                value="<?= esc($course['satuan']) ?>" required>
+                value="<?= esc($bahan['satuan']) ?>" required>
           <div class="invalid-feedback">Satuan is required.</div>
         </div>
         <div class="mb-3">
           <label class="form-label">Tanggal Masuk</label>
-          <input type="text" class="form-control" name="tanggal_masuk" 
-                value="<?= esc($course['tanggal_masuk']) ?>" required>
-          <div class="invalid-feedback">Entry Date is required.</div>
+          <input type="date" class="form-control" name="tanggal_masuk" 
+                value="<?= esc($bahan['tanggal_masuk']) ?>" required>
         </div>
         <div class="mb-3">
           <label class="form-label">Tanggal Kadaluarsa</label>
-          <input type="text" class="form-control" name="tanggal_kadaluarsa" 
-                value="<?= esc($course['tanggal_kadaluarsa']) ?>" required>
-          <div class="invalid-feedback">Expiry Date is required.</div>
+          <input type="date" class="form-control" name="tanggal_kadaluarsa" 
+                value="<?= esc($bahan['tanggal_kadaluarsa']) ?>" required>
         </div>
         <div class="mb-3">
           <label class="form-label">Status</label>
-          <input type="text" class="form-control" name="status" 
-                value="<?= esc($course['status']) ?>" required>
-          <div class="invalid-feedback">Status is required.</div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Created</label>
-          <input type="text" class="form-control" name="created_at" 
-                value="<?= esc($course['created_at']) ?>" required>
-          <div class="invalid-feedback">Created Date is required.</div>
+          <select class="form-select" name="status" required>
+            <option value="tersedia" <?= $bahan['status']=='tersedia'?'selected':'' ?>>Tersedia</option>
+            <option value="segera_kadaluarsa" <?= $bahan['status']=='segera_kadaluarsa'?'selected':'' ?>>Segera Kadaluarsa</option>
+            <option value="kadaluarsa" <?= $bahan['status']=='kadaluarsa'?'selected':'' ?>>Kadaluarsa</option>
+            <option value="habis" <?= $bahan['status']=='habis'?'selected':'' ?>>Habis</option>
+          </select>
         </div>
 
         <button class="btn btn-success"><i class="bi bi-save"></i> Update</button>
-        <a href="/courses" class="btn btn-secondary">Back</a>
+        <a href="/bahanbaku" class="btn btn-secondary">Back</a>
       </form>
 
     </div>
