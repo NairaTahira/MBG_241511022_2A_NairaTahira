@@ -1,68 +1,84 @@
-# CodeIgniter 4 Application Starter
 
-## What is CodeIgniter?
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+# 🏭 MBG — Material & Kitchen Request Management System
+## Naira Tahira (241511022)
+## 2A - D3 Informatic Engineering
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+MBG (**Manajemen Bahan Gudang**) is a web-based application built using **CodeIgniter 4** to manage raw material inventories and kitchen requests in a catering or manufacturing environment.  
+It helps coordinate between **Warehouse (Gudang)** and **Kitchen (Dapur)** users for efficient material flow, request approvals, and stock monitoring.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+---
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+## 🚀 Features
 
-## Installation & updates
+### 👩‍🍳 Dapur (Kitchen)
+- Create new **Material Requests (Permintaan Bahan)** for cooking.
+- Specify **menu**, **cooking date**, and **quantity (porsi)**.
+- Select multiple raw materials and the required amount for each.
+- View request status: **Menunggu**, **Disetujui**, or **Ditolak**.
+- See detailed request history and reasons for rejection.
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+### 🏢 Gudang (Warehouse / Admin)
+- Manage **Raw Material (Bahan Baku)** data:
+  - Add, edit, and compute stock and expiration automatically.
+  - Delete raw materials **only if expired** (`status = kadaluarsa`).
+- Process **Kitchen Requests**:
+  - Approve and automatically reduce material stock.
+  - Reject with a reason (`alasan`) sent back to the client.
+- Monitor **material expiration statuses**:
+  - `tersedia` → available  
+  - `segera_kadaluarsa` → expiring soon  
+  - `kadaluarsa` → expired  
+  - `habis` → out of stock  
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+---
 
-## Setup
+## ⚙️ Tech Stack
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+| Component | Description |
+|------------|-------------|
+| **Framework** | CodeIgniter 4 (PHP 8.2) |
+| **Database** | MySQL / MariaDB |
+| **Frontend** | HTML5, Bootstrap 5, JavaScript |
+| **Icons** | Bootstrap Icons |
+| **Server** | Localhost (XAMPP) or Production (Apache/Nginx) |
 
-## Important Change with index.php
+---
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+## 🗄️ Database Structure
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+### 🧾 `user`
+| Field | Description |
+|-------|--------------|
+| `id` | Primary key |
+| `name` | User name |
+| `username`, `password` | Credentials |
+| `role` | `dapur` or `gudang` |
 
-**Please** read the user guide for a better explanation of how CI4 works!
+### 🧾 `bahan_baku`
+| Field | Description |
+|-------|--------------|
+| `id` | Primary key |
+| `nama`, `kategori`, `satuan` | Material details |
+| `jumlah` | Current stock |
+| `tanggal_masuk`, `tanggal_kadaluarsa` | Dates |
+| `status` | Auto-computed (`tersedia`, `kadaluarsa`, etc.) |
 
-## Repository Management
+### 🧾 `permintaan`
+| Field | Description |
+|-------|--------------|
+| `id` | Primary key |
+| `pemohon_id` | FK → `user.id` |
+| `tgl_masak`, `menu_makan`, `jumlah_porsi` | Request info |
+| `status` | `menunggu`, `disetujui`, or `ditolak` |
+| `alasan` | Rejection reason |
+| `created_at` | Timestamp |
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+### 🧾 `permintaan_detail`
+| Field | Description |
+|-------|--------------|
+| `id` | Primary key |
+| `permintaan_id` | FK → `permintaan.id` |
+| `bahan_id` | FK → `bahan_baku.id` |
+| `jumlah_diminta` | Requested quantity |
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
-
-## Server Requirements
-
-PHP version 8.1 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
