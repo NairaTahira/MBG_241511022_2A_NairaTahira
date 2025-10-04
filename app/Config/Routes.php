@@ -78,7 +78,7 @@ $routes->group('', ['filter' => 'authguard'], static function ($routes) {
 
     // Gudang processes permintaan
     $routes->group('permintaan-admin', ['filter' => 'authguard:gudang'], function ($routes) {
-        $routes->get('/', 'Permintaan::adminindex');
+        $routes->get('admin_index', 'Permintaan::adminIndex');
         $routes->get('approve/(:num)', 'Permintaan::approve/$1');
         $routes->get('reject/(:num)', 'Permintaan::reject/$1');
     });

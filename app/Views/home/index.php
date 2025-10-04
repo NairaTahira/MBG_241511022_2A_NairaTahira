@@ -33,7 +33,7 @@
             <i class="bi bi-clipboard-check display-4 text-success"></i>
             <h5 class="mt-3">Process Dapur Requests</h5>
             <p class="text-muted">ACC/ Reject material request.</p>
-            <a href="/permintaan" class="btn btn-outline-success btn-sm">Go</a>
+            <a href="/permintaan-admin/admin_index" class="btn btn-outline-success btn-sm">Go</a>
           </div>
         </div>
       </div>
