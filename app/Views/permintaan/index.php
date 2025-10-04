@@ -21,6 +21,7 @@
             <th>Menu</th>
             <th>Porsi</th>
             <th>Status</th>
+            <th>Alasan</th>
             <th>Created</th>
           </tr>
         </thead>
@@ -42,6 +43,7 @@
                     <span class="badge bg-danger">Ditolak</span>
                   <?php endif; ?>
                 </td>
+                <td><?= esc($p['alasan']) ?></td>
                 <td><?= esc($p['created_at']) ?></td>
               </tr>
             <?php endforeach; ?>

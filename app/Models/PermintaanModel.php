@@ -7,6 +7,7 @@ class PermintaanModel extends Model
 {
     protected $table      = 'permintaan';
     protected $primaryKey = 'id';
+    protected $useAutoIncrement = true;
 
     protected $allowedFields = [
         'pemohon_id', 'tgl_masak', 'menu_makan', 'jumlah_porsi','status', 'alasan', 'created_at'

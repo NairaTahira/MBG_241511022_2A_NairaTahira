@@ -50,17 +50,6 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 mb-4">
-        <div class="card text-center shadow-sm h-100">
-          <div class="card-body">
-            <i class="bi bi-list-task display-4 text-success"></i>
-            <h5 class="mt-3">View Request Status</h5>
-            <p class="text-muted">Monitor the status of your request</p>
-            <a href="/permintaan" class="btn btn-outline-success btn-sm">Monitor</a>
-          </div>
-        </div>
-      </div>
-
       
     <?php endif; ?>
     
