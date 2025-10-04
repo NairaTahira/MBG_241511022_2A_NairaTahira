@@ -129,14 +129,14 @@ class BahanBaku extends BaseController
     {
         $bahan = $this->model->find($id);
         if (!$bahan) {
-            return redirect()->to('/bahanbaku')->with('error', 'Data tidak ditemukan.');
+            return redirect()->to('/bahanbaku')->with('error', 'Data not Found.');
         }
 
         if ($bahan['status'] !== 'kadaluarsa') {
-            return redirect()->to('/bahanbaku')->with('error', 'Hanya bahan dengan status "kadaluarsa" yang boleh dihapus.');
+            return redirect()->to('/bahanbaku')->with('error', 'Removing Available Raw Materials are Prohibited.');
         }
 
         $this->model->delete($id);
-        return redirect()->to('/bahanbaku')->with('success', 'Bahan kadaluarsa berhasil dihapus.');
+        return redirect()->to('/bahanbaku')->with('success', 'Expired raw material has been removed.');
     }
 }

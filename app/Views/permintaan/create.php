@@ -39,7 +39,11 @@
                   <?php endforeach; ?>
                 </select>
               </td>
-              <td><input type="number" name="jumlah_diminta[]" class="form-control" required></td>
+              <td>
+                <input type="number" name="jumlah_diminta[]" class="form-control jumlah-input" 
+                      min="1" step="1" required 
+                      oninput="if(this.value < 1) this.value = 1;">
+              </td>
               <td><button type="button" class="btn btn-danger remove-row"><i class="bi bi-trash"></i></button></td>
             </tr>
           </tbody>
