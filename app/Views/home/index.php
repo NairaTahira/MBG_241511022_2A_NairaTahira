@@ -46,7 +46,7 @@
             <i class="bi bi-book display-4 text-primary"></i>
             <h5 class="mt-3">Request Materials</h5>
             <p class="text-muted">Send out requested materials for cooking</p>
-            <a href="/courses" class="btn btn-outline-primary btn-sm">Go</a>
+            <a href="/permintaan" class="btn btn-outline-primary btn-sm">Go</a>
           </div>
         </div>
       </div>

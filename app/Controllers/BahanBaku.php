@@ -13,11 +13,22 @@ class BahanBaku extends BaseController
     }
 
 
-    // List all the raw materials
+    // Index — compute & persist statuses, then show list
     public function index()
     {
+        $all = $this->model->findAll();
 
-        $bahanBaku = $this->model->findAll();
+        // Recompute statuses and persist if changed
+        foreach ($all as $row) {
+            $newStatus = $this->model->computeStatus($row);
+            if ($newStatus !== $row['status']) {
+                $this->model->update($row['id'], ['status' => $newStatus]);
+                $row['status'] = $newStatus;
+            }
+        }
+
+        // reload after updates
+        $bahanBaku = $this->model->orderBy('id','ASC')->findAll();
 
         $data = [
             'title'   => 'Daftar Bahan Baku',
@@ -41,19 +52,26 @@ class BahanBaku extends BaseController
 
 
     // Storing new raw material
+    // Store — ensure status default to 'tersedia' on insert
     public function store()
     {
-        $this->model->save([
+        $jumlah = (int)$this->request->getPost('jumlah');
+
+        $status = 'tersedia';
+        if ($jumlah <= 0) $status = 'habis';
+
+        $this->model->insert([
             'nama' => $this->request->getPost('nama'),
-            'kategori' => $this->request->getPost('course_name'),
-            'jumlah'     => $this->request->getPost('jumlah'),
+            'kategori' => $this->request->getPost('kategori'),
+            'jumlah' => $jumlah,
             'satuan' => $this->request->getPost('satuan'),
             'tanggal_masuk' => $this->request->getPost('tanggal_masuk'),
             'tanggal_kadaluarsa' => $this->request->getPost('tanggal_kadaluarsa'),
-            'status' => $this->request->getPost('status'),
-            'created_at'         => date('Y-m-d H:i:s')
+            'status' => $status,
+            'created_at' => date('Y-m-d H:i:s')
         ]);
-        return redirect()->to('/bahanbaku');
+
+        return redirect()->to('/bahanbaku')->with('success', 'Bahan baku ditambahkan.');
     }
 
 
@@ -69,24 +87,56 @@ class BahanBaku extends BaseController
     }
 
 
-    // Update raw material
+    // Update — validate jumlah >= 0
     public function update($id)
     {
+        $jumlah = (int)$this->request->getPost('jumlah');
+
+        if ($jumlah < 0) {
+            return redirect()->back()->with('error', 'Nilai stok tidak boleh kurang dari 0.');
+        }
+
         $this->model->update($id, [
             'nama' => $this->request->getPost('nama'),
             'kategori' => $this->request->getPost('kategori'),
-            'jumlah'     => $this->request->getPost('jumlah'),
+            'jumlah' => $jumlah,
             'satuan' => $this->request->getPost('satuan'),
             'tanggal_masuk' => $this->request->getPost('tanggal_masuk'),
             'tanggal_kadaluarsa' => $this->request->getPost('tanggal_kadaluarsa'),
-            'status' => $this->request->getPost('status'),
         ]);
-        return redirect()->to('/bahanbaku');
+
+        // recompute status immediately
+        $bahan = $this->model->find($id);
+        $newStatus = $this->model->computeStatus($bahan);
+        $this->model->update($id, ['status' => $newStatus]);
+
+        return redirect()->to('/bahanbaku')->with('success', 'Data berhasil diperbarui.');
     }
 
+    // Show confirm delete page
+    public function confirmDelete($id)
+    {
+        $bahan = $this->model->find($id);
+        $data = [
+            'title' => 'Konfirmasi Hapus Bahan',
+            'content' => view('bahanbaku/confirm_delete', ['bahan' => $bahan])
+        ];
+        return view('view_template_01', $data);
+    }
+
+    // Delete — only allowed if status == 'kadaluarsa'
     public function delete($id)
     {
+        $bahan = $this->model->find($id);
+        if (!$bahan) {
+            return redirect()->to('/bahanbaku')->with('error', 'Data tidak ditemukan.');
+        }
+
+        if ($bahan['status'] !== 'kadaluarsa') {
+            return redirect()->to('/bahanbaku')->with('error', 'Hanya bahan dengan status "kadaluarsa" yang boleh dihapus.');
+        }
+
         $this->model->delete($id);
-        return redirect()->to('/bahanbaku');
+        return redirect()->to('/bahanbaku')->with('success', 'Bahan kadaluarsa berhasil dihapus.');
     }
 }

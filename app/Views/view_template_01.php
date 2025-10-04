@@ -84,10 +84,10 @@
         <li class="nav-item"><a class="nav-link" href="/home"><i class="bi bi-house-door"></i> Home</a></li>
         <?php if(session()->get('role')==='gudang'): ?>
           <li class="nav-item"><a class="nav-link" href="/bahanbaku"><i class="bi bi-journal-text"></i> Bahan Baku </a></li>
-          <li class="nav-item"><a class="nav-link" href="/students"><i class="bi bi-people"></i> Table Two </a></li>
+          <li class="nav-item"><a class="nav-link" href="/permintaan"><i class="bi bi-people"></i> Table Two </a></li>
         <?php elseif(session()->get('role')==='dapur'): ?>
-          <li class="nav-item"><a class="nav-link" href="/courses"><i class="bi bi-book"></i> Table One </a></li>
-          <li class="nav-item"><a class="nav-link" href="/my-courses"><i class="bi bi-list-check"></i> Table Two </a></li>
+          <li class="nav-item"><a class="nav-link" href="/permintaan"><i class="bi bi-book"></i> Table One </a></li>
+          <li class="nav-item"><a class="nav-link" href="/permintaan"><i class="bi bi-list-check"></i> Table Two </a></li>
         <?php endif; ?>
       </ul>
       <span class="navbar-text">
