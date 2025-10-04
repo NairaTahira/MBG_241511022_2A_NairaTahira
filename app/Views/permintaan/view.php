@@ -48,7 +48,7 @@
           <?php else: ?>
             <tr>
               <td colspan="2" class="text-center text-muted p-3">
-                Tidak ada bahan diminta
+                No Materials Requested
               </td>
             </tr>
           <?php endif; ?>

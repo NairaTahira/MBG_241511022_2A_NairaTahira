@@ -31,7 +31,7 @@ class BahanBaku extends BaseController
         $bahanBaku = $this->model->orderBy('id','ASC')->findAll();
 
         $data = [
-            'title'   => 'Daftar Bahan Baku',
+            'title'   => 'Lists of Raw Materials',
             'content' => view('bahanbaku/index', ['bahan_baku' => $bahanBaku])
         ];
         return view('view_template_01', $data);
@@ -44,14 +44,12 @@ class BahanBaku extends BaseController
         if (session()->get('role') !== 'gudang') return redirect()->to('/bahanbaku');
 
         $data = [
-            'title'   => 'Add Bahan Baku',
+            'title'   => 'Add Raw Materials',
             'content' => view('bahanbaku/create')
         ];
         return view('view_template_01', $data);
     }
 
-
-    // Storing new raw material
     // Store — ensure status default to 'tersedia' on insert
     public function store()
     {
@@ -80,7 +78,7 @@ class BahanBaku extends BaseController
     {
         $bahan = $this->model->find($id);
         $data = [
-            'title'   => 'Edit Bahan Baku',
+            'title'   => 'Edit Raw Materials',
             'content' => view('bahanbaku/edit', ['bahan' => $bahan])
         ];
         return view('view_template_01', $data);
@@ -93,7 +91,7 @@ class BahanBaku extends BaseController
         $jumlah = (int)$this->request->getPost('jumlah');
 
         if ($jumlah < 0) {
-            return redirect()->back()->with('error', 'Nilai stok tidak boleh kurang dari 0.');
+            return redirect()->back()->with('error', 'The stock value cannot be less than 0.');
         }
 
         $this->model->update($id, [
@@ -110,7 +108,7 @@ class BahanBaku extends BaseController
         $newStatus = $this->model->computeStatus($bahan);
         $this->model->update($id, ['status' => $newStatus]);
 
-        return redirect()->to('/bahanbaku')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->to('/bahanbaku')->with('success', 'Data updated successfully.');
     }
 
     // Show confirm delete page
@@ -118,7 +116,7 @@ class BahanBaku extends BaseController
     {
         $bahan = $this->model->find($id);
         $data = [
-            'title' => 'Konfirmasi Hapus Bahan',
+            'title' => 'Confirm Delete Material',
             'content' => view('bahanbaku/confirm_delete', ['bahan' => $bahan])
         ];
         return view('view_template_01', $data);

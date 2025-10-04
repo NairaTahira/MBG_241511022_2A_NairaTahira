@@ -3,7 +3,7 @@
   <!-- Page Header -->
   <div class="card shadow-lg border-0 mb-4">
     <div class="card-body bg-warning text-dark rounded">
-      <h3 class="mb-0"><i class="bi bi-pencil-square"></i> Edit Course</h3>
+      <h3 class="mb-0"><i class="bi bi-pencil-square"></i> Edit Raw Material</h3>
     </div>
   </div>
 
@@ -13,7 +13,7 @@
       <form id="editCourseForm" method="post" action="/bahanbaku/update/<?= $bahan['id'] ?>" novalidate>
         <div class="mb-3">
           
-          <label class="form-label">Bahan Baku</label>
+          <label class="form-label">Raw Material</label>
           <input type="text" class="form-control" name="nama" 
                 value="<?= esc($bahan['nama']) ?>" required>
           <div class="invalid-feedback">Bahan Baku is required.</div>

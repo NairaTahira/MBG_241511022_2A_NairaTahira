@@ -2,9 +2,9 @@
   <!-- Page Header -->
   <div class="card shadow-lg mb-4">
     <div class="card-body d-flex justify-content-between align-items-center bg-primary text-white rounded">
-      <h3 class="mb-0"><i class="bi bi-journal-text"></i> Daftar Permintaan</h3>
+      <h3 class="mb-0"><i class="bi bi-journal-text"></i> List of Permintaan</h3>
       <a href="/permintaan/create" class="btn btn-light text-success fw-bold shadow-sm">
-        <i class="bi bi-plus-circle"></i> Create Permintaan
+        <i class="bi bi-plus-circle"></i> Create New Request
       </a>
     </div>
   </div>
@@ -48,7 +48,7 @@
               </tr>
             <?php endforeach; ?>
           <?php else: ?>
-            <tr><td colspan="7" class="text-center text-muted">Tidak ada permintaan</td></tr>
+            <tr><td colspan="7" class="text-center text-muted">No Requests Found</td></tr>
           <?php endif; ?>
         </tbody>
       </table>

@@ -118,12 +118,10 @@ class Permintaan extends BaseController
     }
 
 
-    /**
-     * Admin: list pending requests
-     */
+    //Admin: list pending requests
     public function adminIndex()
     {
-        // only gudang allowed by routes/filter
+        // only gudang admin allowed by routes/filter
         $pending = $this->permintaanModel->select('permintaan.*, user.name as pemohon_name')
                                          ->join('user', 'user.id = permintaan.pemohon_id')
                                          ->where('status', 'menunggu')
@@ -142,7 +140,7 @@ class Permintaan extends BaseController
     public function approve($id)
     {
         $perm = $this->permintaanModel->find($id);
-        if (!$perm) return redirect()->back()->with('error', 'Permintaan tidak ditemukan.');
+        if (!$perm) return redirect()->back()->with('error', 'Request not found.');
 
         // load detail lines
         $details = $this->detailModel->where('permintaan_id', $id)->findAll();
@@ -155,7 +153,7 @@ class Permintaan extends BaseController
             $bahan = $this->bahanModel->find($d['bahan_id']);
             if (!$bahan) {
                 $db->transRollback();
-                return redirect()->back()->with('error', 'Bahan tidak ditemukan: id='.$d['bahan_id']);
+                return redirect()->back()->with('error', 'Material not found: id='.$d['bahan_id']);
             }
 
             $need = (int)$d['jumlah_diminta'];
@@ -163,7 +161,7 @@ class Permintaan extends BaseController
 
             if ($need > $stok) {
                 $db->transRollback();
-                return redirect()->back()->with('error', "Stok tidak cukup untuk bahan {$bahan['nama']} (stok: {$stok}, minta: {$need})");
+                return redirect()->back()->with('error', "Insufficient stock for materials {$bahan['nama']} (stok: {$stok}, minta: {$need})");
             }
 
             $newstok = $stok - $need;
@@ -182,19 +180,18 @@ class Permintaan extends BaseController
         $db->transComplete();
 
         if ($db->transStatus() === false) {
-            return redirect()->back()->with('error', 'Gagal memproses persetujuan (transaksi gagal).');
+            return redirect()->back()->with('error', 'Failed to process approval (transaction failed).');
         }
 
-        return redirect()->back()->with('success', 'Permintaan disetujui dan stok telah dikurangi.');
+        return redirect()->back()->with('success', 'The request was approved and the stock has been reduced.');
     }
 
-    /**
-     * Admin: Reject -> optional reason
-     */
+
+    // Admin: Reject -> optional reason
     public function reject($id)
     {
         $perm = $this->permintaanModel->find($id);
-        if (!$perm) return redirect()->back()->with('error', 'Permintaan tidak ditemukan.');
+        if (!$perm) return redirect()->back()->with('error', 'Request not found.');
 
         $reason = $this->request->getPost('alasan') ?? $this->request->getVar('alasan') ?? null;
 

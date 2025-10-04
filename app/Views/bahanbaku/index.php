@@ -3,10 +3,10 @@
   <!-- Page Header -->
   <div class="card shadow-lg border-0 mb-4">
     <div class="card-body d-flex justify-content-between align-items-center bg-primary text-white rounded">
-      <h2 class="mb-0"><i class="bi bi-box-seam"></i> Bahan Baku</h2>
+      <h2 class="mb-0"><i class="bi bi-box-seam"></i> Raw Materials </h2>
       <?php if(session()->get('role')==='gudang'): ?>
         <a href="/bahanbaku/create" class="btn btn-light text-primary fw-bold shadow-sm">
-          <i class="bi bi-plus-circle"></i> Add Bahan Baku
+          <i class="bi bi-plus-circle"></i> Add Raw Material
         </a>
       <?php endif; ?>
     </div>
@@ -20,7 +20,7 @@
           <tr>
             <th>#</th>
             <th>Nama</th>
-            <th>Kategori</th>
+            <th>Category</th>
             <th>Jumlah</th>
             <th>Satuan</th>
             <th>Tanggal Masuk</th>
@@ -79,7 +79,7 @@
           <?php else: ?>
             <tr>
               <td colspan="10" class="text-center text-muted p-3">
-                Tidak ada data bahan baku
+                No raw materials found
               </td>
             </tr>
           <?php endif; ?>

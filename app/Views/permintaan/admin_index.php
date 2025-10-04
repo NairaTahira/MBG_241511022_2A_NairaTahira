@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="card shadow-lg mb-4">
     <div class="card-body d-flex justify-content-between align-items-center bg-primary text-white rounded">
-      <h3 class="mb-0"><i class="bi bi-clipboard-check"></i> Permintaan — Menunggu</h3>
+      <h3 class="mb-0"><i class="bi bi-clipboard-check"></i> Request — Pending</h3>
     </div>
   </div>
 
@@ -14,7 +14,7 @@
             <th>Pemohon</th>
             <th>Tgl Masak</th>
             <th>Menu</th>
-            <th>Porsi</th>
+            <th>Portion</th>
             <th>Created</th>
             <th class="text-center">Aksi</th>
           </tr>
@@ -42,7 +42,7 @@
                       onsubmit="return confirm('Setujui permintaan ini dan kurangi stok sesuai jumlah?')">
                   <?= csrf_field() ?>
                   <button type="submit" class="btn btn-success btn-sm">
-                    <i class="bi bi-check2-circle"></i> Setujui
+                    <i class="bi bi-check2-circle"></i> Accept
                   </button>
                 </form>
 
@@ -50,7 +50,7 @@
                 <button type="button" 
                         class="btn btn-danger btn-sm btn-reject" 
                         data-id="<?= $p['id'] ?>">
-                  <i class="bi bi-x-circle"></i> Tolak
+                  <i class="bi bi-x-circle"></i> Reject
                 </button>
               </td>
             </tr>
@@ -58,7 +58,7 @@
         <?php else: ?>
           <tr>
             <td colspan="7" class="text-center text-muted p-3">
-              Tidak ada permintaan menunggu
+              No Pending Requests
             </td>
           </tr>
         <?php endif; ?>
@@ -75,18 +75,18 @@
       <?= csrf_field() ?>
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Alasan Penolakan</h5>
+          <h5 class="modal-title">Reasons for Rejecting</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label>Alasan</label>
+            <label>Reason</label>
             <textarea name="alasan" class="form-control" required></textarea>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Batal</button>
-          <button type="submit" class="btn btn-danger">Tolak</button>
+          <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel</button>
+          <button type="submit" class="btn btn-danger">Reject</button>
         </div>
       </div>
     </form>

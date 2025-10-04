@@ -3,7 +3,7 @@
   <!-- Page Header -->
   <div class="card shadow-lg border-0 mb-4">
     <div class="card-body bg-primary text-white rounded">
-      <h3 class="mb-0"><i class="bi bi-plus-circle"></i> Add Bahan baku</h3>
+      <h3 class="mb-0"><i class="bi bi-plus-circle"></i> Add Raw Material</h3>
     </div>
   </div>
 

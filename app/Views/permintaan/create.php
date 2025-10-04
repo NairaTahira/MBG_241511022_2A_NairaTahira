@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="card shadow-lg border-0 mb-4">
     <div class="card-body bg-success text-white rounded">
-      <h3><i class="bi bi-plus-circle"></i> Create Permintaan Bahan</h3>
+      <h3><i class="bi bi-plus-circle"></i> Create New Material Request</h3>
     </div>
   </div>
 

@@ -20,7 +20,7 @@
         <div class="card text-center shadow-sm h-100 border-0">
           <div class="card-body">
             <i class="bi bi-journal-text display-4 text-primary"></i>
-            <h5 class="mt-3">Kelola Bahan Baku</h5>
+            <h5 class="mt-3">Raw Materials</h5>
             <p class="text-muted">Modify, Create, or Stock Up the Raw Materials </p>
             <a href="/bahanbaku" class="btn btn-outline-primary btn-sm">Go</a>
           </div>
@@ -39,18 +39,17 @@
       </div>
 
     <?php elseif(session()->get('role') === 'dapur'): ?>
-      <!-- Browse Courses -->
-      <div class="col-md-6 mb-4">
-        <div class="card text-center shadow-sm h-100 border-0">
-          <div class="card-body">
-            <i class="bi bi-book display-4 text-primary"></i>
-            <h5 class="mt-3">Request Materials</h5>
-            <p class="text-muted">Send out requested materials for cooking</p>
-            <a href="/permintaan" class="btn btn-outline-primary btn-sm">Go</a>
-          </div>
+    <!-- Request Materials -->
+    <div class="col-md-6 offset-md-3 mb-4"> <!-- ✅ Centered column -->
+      <div class="card text-center shadow-sm h-100 border-0">
+        <div class="card-body">
+          <i class="bi bi-book display-4 text-primary"></i>
+          <h5 class="mt-3">Request Materials</h5>
+          <p class="text-muted">Send out requested materials for cooking</p>
+          <a href="/permintaan" class="btn btn-outline-primary btn-sm">Go</a>
         </div>
       </div>
-      
+    </div>
     <?php endif; ?>
     
 

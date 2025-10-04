@@ -83,8 +83,8 @@
       <ul class="navbar-nav me-auto">
         <li class="nav-item"><a class="nav-link" href="/home"><i class="bi bi-house-door"></i> Home</a></li>
         <?php if(session()->get('role')==='gudang'): ?>
-          <li class="nav-item"><a class="nav-link" href="/bahanbaku"><i class="bi bi-journal-text"></i> Bahan Baku </a></li>
-          <li class="nav-item"><a class="nav-link" href="/permintaan-admin/admin_index"><i class="bi bi-people"></i> Permintaan Client </a></li>
+          <li class="nav-item"><a class="nav-link" href="/bahanbaku"><i class="bi bi-journal-text"></i> Raw Materials </a></li>
+          <li class="nav-item"><a class="nav-link" href="/permintaan-admin/admin_index"><i class="bi bi-people"></i> Client Kitchen Requests </a></li>
         <?php elseif(session()->get('role')==='dapur'): ?>
           <li class="nav-item"><a class="nav-link" href="/permintaan"><i class="bi bi-book"></i> Request Materials </a></li>
         <?php endif; ?>
