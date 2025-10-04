@@ -24,34 +24,43 @@
           <?php foreach($permintaan as $i=>$p): ?>
             <tr>
               <td><?= $i+1 ?></td>
-              <!-- show pemohon_name from join -->
               <td class="fw-bold text-primary"><?= esc($p['pemohon_name']) ?></td>
               <td><?= esc($p['tgl_masak']) ?></td>
               <td><?= esc($p['menu_makan']) ?></td>
               <td><span class="badge bg-success"><?= esc($p['jumlah_porsi']) ?></span></td>
               <td><?= esc($p['created_at']) ?></td>
               <td class="text-center">
+                <!-- Detail -->
                 <a href="/permintaan/view/<?= $p['id'] ?>" class="btn btn-info btn-sm">
                   <i class="bi bi-eye"></i> Detail
                 </a>
 
-                <form method="post" action="/permintaan-admin/approve/<?= $p['id'] ?>" 
+                <!-- Approve (POST form) -->
+                <form method="post" 
+                      action="/permintaan-admin/approve/<?= $p['id'] ?>" 
                       style="display:inline-block" 
                       onsubmit="return confirm('Setujui permintaan ini dan kurangi stok sesuai jumlah?')">
                   <?= csrf_field() ?>
-                  <button class="btn btn-success btn-sm">
+                  <button type="submit" class="btn btn-success btn-sm">
                     <i class="bi bi-check2-circle"></i> Setujui
                   </button>
                 </form>
 
-                <button class="btn btn-danger btn-sm btn-reject" data-id="<?= $p['id'] ?>">
+                <!-- Reject button (opens modal) -->
+                <button type="button" 
+                        class="btn btn-danger btn-sm btn-reject" 
+                        data-id="<?= $p['id'] ?>">
                   <i class="bi bi-x-circle"></i> Tolak
                 </button>
               </td>
             </tr>
           <?php endforeach; ?>
         <?php else: ?>
-          <tr><td colspan="7" class="text-center text-muted p-3">Tidak ada permintaan menunggu</td></tr>
+          <tr>
+            <td colspan="7" class="text-center text-muted p-3">
+              Tidak ada permintaan menunggu
+            </td>
+          </tr>
         <?php endif; ?>
         </tbody>
       </table>
@@ -89,8 +98,7 @@ document.querySelectorAll('.btn-reject').forEach(btn => {
   btn.addEventListener('click', function() {
     const id = this.dataset.id;
     const form = document.getElementById('rejectForm');
-    form.action = '/permintaan-admin/reject/' + id;
-    // show modal
+    form.action = '/permintaan-admin/reject/' + id; // sets action to correct POST route
     new bootstrap.Modal(document.getElementById('rejectModal')).show();
   });
 });
