@@ -35,7 +35,9 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'auth'          => \App\Filters\AuthGuard::class,
-        'authguard'     => \App\Filters\AuthGuard::class
+        'authguard'     => \App\Filters\AuthGuard::class,
+        'gudang' => \App\Filters\GudangFilter::class,
+        'dapur'  => \App\Filters\DapurFilter::class
     ];
 
     /**

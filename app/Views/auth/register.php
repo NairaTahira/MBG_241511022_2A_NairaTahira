@@ -87,33 +87,21 @@
     <?php endif; ?>
 
     <form id="registerForm" class="needs-validation" method="post" action="/auth/storeRegister" novalidate>
-      <!-- Student Name -->
+      <!-- Full Name -->
       <div class="mb-3">
-        <label for="name" class="form-label">Username</label>
+        <label for="name" class="form-label">Full Name</label>
         <input type="text" 
                class="form-control" 
                id="name" 
                name="name" 
                minlength="3" 
-               maxlength="50" 
+               maxlength="50"
+               autocomplete="off"
+               placeholder="Enter your Full Name"
                required>
-        <div class="invalid-feedback">Student name is required (3–50 characters).</div>
+        <div class="invalid-feedback">Full Name is required (3–50 characters).</div>
+        <small class="text-muted">(Max 50 characters)</small>
       </div>
-
-      <!-- NIM
-      <div class="mb-3">
-        <label for="nim" class="form-label"></label>
-        <input type="text" 
-               class="form-control" 
-               id="nim" 
-               name="nim" 
-               pattern="^[0-9]{8,12}$" 
-               minlength="8" 
-               maxlength="12" 
-               required>
-        <div class="invalid-feedback">NIM must be 8–12 digits.</div>
-        <small class="text-muted">This will also serve as your password</small>
-      </div> -->
 
       <!-- Email -->
       <div class="mb-3">
@@ -124,8 +112,37 @@
                name="email" 
                pattern="^[a-zA-Z0-9._%+-]+@mbg.id$" 
                maxlength="100" 
-               required>
+               required
+               autocomplete="off"
+               placeholder="Enter your Email">
         <div class="invalid-feedback">Enter a valid email (example@mbg.id).</div>
+        <small class="text-muted">(Max 50 characters)</small>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" 
+               class="form-control" 
+               id="password" 
+               name="password" 
+               minlength="5"  
+               required
+               autocomplete="new-password"
+               placeholder="Enter your Password">
+        <div class="invalid-feedback">Password is required (Must be atleast 5 characters)</div>
+        <small class="text-muted">(Min 5 characters)</small>
+      </div>
+
+      <!-- Role -->
+      <div class="mb-3">
+        <label for="role" class="form-label">Position</label>
+        <select id="role" name="role" class="form-select" required>
+          <option value="">-- Select Role --</option>
+          <option value="gudang">Gudang (Admin)</option>
+          <option value="dapur">Dapur (Client)</option>
+        </select>
+        <div class="invalid-feedback">Please choose a role.</div>
       </div>
 
       <button type="submit" class="btn btn-success w-100">

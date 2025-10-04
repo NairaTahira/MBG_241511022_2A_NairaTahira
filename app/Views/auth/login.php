@@ -91,16 +91,16 @@
     <!-- Login Form -->
     <form id="loginForm" method="post" action="/auth/checkLogin" novalidate>
       <div class="mb-3">
-        <label for="username" class="form-label">Username </label>
-        <input type="text" 
+        <label for="email" class="form-label">Email </label>
+        <input type="email" 
                class="form-control" 
-               id="name" 
-               name="name" 
+               id="email" 
+               name="email" 
                maxlength="50" 
                required
                autocomplete="off"
-               placeholder="Enter your Username">
-        <div class="invalid-feedback">Username is required (max 50 chars).</div>
+               placeholder="Enter your Email">
+        <div class="invalid-feedback">Valid Email is required (max 50 chars).</div>
         <small class="text-muted">(Max 50 characters)</small>
       </div>
 
@@ -110,12 +110,12 @@
                class="form-control" 
                id="password" 
                name="password" 
-               minlength="8" 
+               minlength="5" 
                required
                autocomplete="new-password"
                placeholder="Enter your password">
-        <div class="invalid-feedback">Password must be at least 8 characters.</div>
-        <small class="text-muted">(Min 8 characters)</small>
+        <div class="invalid-feedback">Password is required (must be at least 5 characters.)</div>
+        <small class="text-muted">(Min 5 characters)</small>
       </div>
 
       <button type="submit" class="btn btn-primary w-100">

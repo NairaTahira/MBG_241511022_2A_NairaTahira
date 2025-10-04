@@ -12,6 +12,7 @@
     <div class="card-body">
       <form id="editCourseForm" method="post" action="/courses/update/<?= $course['id'] ?>" novalidate>
         <div class="mb-3">
+          
           <label class="form-label">Bahan Baku</label>
           <input type="text" class="form-control" name="nama" 
                 value="<?= esc($course['nama']) ?>" required>
@@ -56,6 +57,7 @@
                 value="<?= esc($course['status']) ?>" required>
           <div class="invalid-feedback">Status is required.</div>
         </div>
+
         <div class="mb-3">
           <label class="form-label">Created</label>
           <input type="text" class="form-control" name="created_at" 

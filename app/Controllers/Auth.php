@@ -1,6 +1,6 @@
 <?php 
 namespace App\Controllers;
-use App\Models\RecordsModel;
+use App\Models\UserModel;
 
 class Auth extends BaseController
 {
@@ -16,21 +16,24 @@ class Auth extends BaseController
 
     public function storeRegister()
     {
-        $name  = $this->request->getPost('name');
-        $email = $this->request->getPost('email');
+        $userModel = new UserModel();
 
-        $studentModel = new \App\Models\StudentModel();
+        $name     = $this->request->getPost('name');
+        $email    = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+        $role     = $this->request->getPost('role'); // gudang(admin) / dapur(client)
 
         // Check if student already exists
-        if ($studentModel->where('email', $email)->first()) {
+        if ($userModel->where('email', $email)->first()) {
             return redirect()->to('/register')->with('error', 'Email already registered!');
         }
 
-        // Use NIM as password For Students
-        $studentModel->insert([
-            'name'          => $name,
-            'email'         => $email,
-            'password_hash' => password_hash($password, PASSWORD_DEFAULT)
+        $userModel->insert([
+            'name'     => $name,
+            'email'    => $email,
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+            'role'     => $role,
+            'created_at' => date('Y-m-d H:i:s')
         ]);
 
         return redirect()->to('/login')->with('success', 'Account created! You can now log in.');
@@ -39,35 +42,26 @@ class Auth extends BaseController
 
     public function checkLogin()
     {
-        $username = strtolower($this->request->getPost('name'));
-        $password = $this->request->getPost('password');    
+        $email    = $this->request->getPost('email');
+        $password = $this->request->getPost('password'); 
 
-        $model = new RecordsModel();
+        $userModel = new UserModel();
+        $user = $userModel->where('email', $email)->first();
 
-        // Admin login rule
-        if (strpos($username, 'gudangA') !== false && $password === 'gudang.a') {
-            session()->set([
-                'isLoggedIn' => true,
-                'name'   => $name,
-                'role'       => 'gudang'
-            ]);
-            return redirect()->to('/home');   // send admin to courses
-        }
-
-        // 
-        $studentModel = new \App\Models\StudentModel();
-        $user = $studentModel->where('email', $username)
-                            ->orWhere('name', $username)
-                            ->first();
-
-        if ($user && password_verify($password, $user['password_hash'])) {
+        if ($user && password_verify($password, $user['password'])) {
             session()->set([
                 'isLoggedIn' => true,
                 'user_id'    => $user['id'],
                 'username'   => $user['name'],
-                'role'       => 'student'
+                'role'       => $user['role']
             ]);
-            return redirect()->to('/home');
+        
+            // Redirect based on role
+            if ($user['role'] === 'gudang') {
+                return redirect()->to('/home');
+            } else {
+                return redirect()->to('/home');
+            }
         }
 
         return redirect()->to('/login')->with('error', 'Username atau Password salah!');
