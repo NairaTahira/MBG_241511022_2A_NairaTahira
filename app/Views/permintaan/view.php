@@ -7,10 +7,14 @@
 
   <div class="card shadow-sm border-0">
     <div class="card-body">
-      <p><b>Pemohon:</b> <span class="fw-bold text-primary"><?= esc($permintaan['pemohon_name']) ?></span></p>
+      <p><b>Pemohon:</b> 
+        <span class="fw-bold text-primary"><?= esc($permintaan['pemohon_name']) ?></span>
+      </p>
       <p><b>Tanggal Masak:</b> <?= esc($permintaan['tgl_masak']) ?></p>
       <p><b>Menu:</b> <?= esc($permintaan['menu_makan']) ?></p>
-      <p><b>Jumlah Porsi:</b> <span class="badge bg-success"><?= esc($permintaan['jumlah_porsi']) ?></span></p>
+      <p><b>Jumlah Porsi:</b> 
+        <span class="badge bg-success"><?= esc($permintaan['jumlah_porsi']) ?></span>
+      </p>
       <p><b>Status:</b>
         <?php if($permintaan['status']=='menunggu'): ?>
           <span class="badge bg-warning text-dark">Menunggu</span>
@@ -33,11 +37,12 @@
           </tr>
         </thead>
         <tbody>
-          <?php if(!empty($details)): ?>
-            <?php foreach($details as $d): ?>
+          <tbody>
+          <?php if (!empty($details)): ?>
+            <?php foreach ($details as $d): ?>
               <tr>
-                <td><?= esc($d['bahan_id']) ?></td>
-                <td><?= esc($d['jumlah_diminta']) ?> <?= esc($d['satuan']) ?></td>
+                <td><?= esc($d['nama_bahan']) ?></td>
+                <td><?= esc($d['jumlah_diminta']) ?> <?= esc($d['satuan_bahan']) ?></td>
               </tr>
             <?php endforeach; ?>
           <?php else: ?>

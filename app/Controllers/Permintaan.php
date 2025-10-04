@@ -53,50 +53,57 @@ class Permintaan extends BaseController
     }
 
     // Store permintaan of Client
-        public function store()
-    {
-        $data = [
-            'pemohon_id'   => session()->get('user_id'),
-            'tgl_masak'    => $this->request->getPost('tgl_masak'),
-            'menu_makan'   => $this->request->getPost('menu_makan'),
-            'jumlah_porsi' => $this->request->getPost('jumlah_porsi'),
-            'status'       => 'menunggu',
-            'created_at'   => date('Y-m-d H:i:s')
-        ];
+    public function store()
+{
+    $data = [
+        'pemohon_id'   => session()->get('user_id'),
+        'tgl_masak'    => $this->request->getPost('tgl_masak'),
+        'menu_makan'   => $this->request->getPost('menu_makan'),
+        'jumlah_porsi' => $this->request->getPost('jumlah_porsi'),
+        'status'       => 'menunggu',
+        'created_at'   => date('Y-m-d H:i:s')
+    ];
 
-        $permintaanId = $this->permintaanModel->insert($data);
+    $permintaanId = $this->permintaanModel->insert($data);
 
-        if ($permintaanId === false) {
-            dd($this->permintaanModel->errors());   // debug why insert failed
-        }
-
-        // Save details
-        $bahanIds  = $this->request->getPost('bahan_id');
-        $jumlahDiminta = $this->request->getPost('jumlah_diminta');
-
-        foreach ($bahanIds as $i => $bid) {
-            $this->detailModel->insert([
-                'permintaan_id'  => $permintaanId,
-                'bahan_id'       => $bid,
-                'jumlah_diminta' => $jumlahDiminta[$i]
-            ]);
-        }
-
-        return redirect()->to('/permintaan')->with('success', 'Request Successfully Made!');
+    if (!$permintaanId) {
+        dd($this->permintaanModel->errors());
     }
 
-    // View detail
-     public function view($id)
-    {
-        $permintaan = $this->permintaanModel
-                           ->select('permintaan.*, user.name as pemohon_name')
-                           ->join('user', 'user.id = permintaan.pemohon_id')
-                           ->find($id);
+    // Save detail bahan
+    $bahanIds  = $this->request->getPost('bahan_id');
+    $jumlahDiminta = $this->request->getPost('jumlah_diminta');
 
+    if ($bahanIds && $jumlahDiminta) {
+        foreach ($bahanIds as $i => $bid) {
+            if (!empty($bid) && !empty($jumlahDiminta[$i])) {
+                $this->detailModel->insert([
+                    'permintaan_id'  => $permintaanId,
+                    'bahan_id'       => $bid,
+                    'jumlah_diminta' => $jumlahDiminta[$i]
+                ]);
+            }
+        }
+    }
+
+    return redirect()->to('/permintaan')->with('success', 'Request Successfully Made!');
+}
+
+    // View detail
+    public function view($id)
+    {
+        // Join user to get pemohon name
+        $permintaan = $this->permintaanModel
+                        ->select('permintaan.*, user.name as pemohon_name')
+                        ->join('user', 'user.id = permintaan.pemohon_id')
+                        ->where('permintaan.id', $id)
+                        ->first();
+
+        // Join bahan_baku to get nama + satuan
         $details = $this->detailModel
-                        ->select('permintaan_detail.*, bahan_baku.nama, bahan_baku.satuan')
-                        ->join('bahan_baku', 'bahan_baku.id = permintaan_detail.bahan_id')
-                        ->where('permintaan_id', $id)
+                        ->select('permintaan_detail.*, bahan_baku.nama as nama_bahan, bahan_baku.satuan as satuan_bahan')
+                        ->join('bahan_baku', 'bahan_baku.id = permintaan_detail.bahan_id', 'left')
+                        ->where('permintaan_detail.permintaan_id', $id)
                         ->findAll();
 
         $data = [
@@ -106,8 +113,10 @@ class Permintaan extends BaseController
                 'details'    => $details
             ])
         ];
+
         return view('view_template_01', $data);
     }
+
 
     /**
      * Admin: list pending requests
