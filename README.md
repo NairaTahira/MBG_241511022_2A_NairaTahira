@@ -1,6 +1,6 @@
 
 
-# 🏭 MBG — Material & Kitchen Request Management System
+# MBG — Material & Kitchen Request Management System
 ## Naira Tahira (241511022)
 ## 2A - D3 Informatic Engineering
 
@@ -9,7 +9,7 @@ It helps coordinate between **Warehouse (Gudang)** and **Kitchen (Dapur)** users
 
 ---
 
-## 🚀 Features
+## Features
 
 ### 👩‍🍳 Dapur (Kitchen)
 - Create new **Material Requests (Permintaan Bahan)** for cooking.
