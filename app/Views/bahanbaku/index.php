@@ -61,7 +61,7 @@
                     <a href="/bahanbaku/edit/<?= $b['id'] ?>" class="btn btn-warning btn-sm">
                       <i class="bi bi-pencil-square"></i> Edit
                     </a>
-                    <?php if($b['status'] === 'kadaluarsa'): ?>
+                    <?php if($b['status'] === 'kadaluarsa' || $b["status"] === 'habis'): ?>
                     <a href="/bahanbaku/delete/<?= $b['id'] ?>" 
                       class="btn btn-danger btn-sm"
                       onclick="return confirm('Are you sure you want to delete this expired material?')">
